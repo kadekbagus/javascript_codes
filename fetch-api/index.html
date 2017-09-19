@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+	<title>Fetch API example</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+</head>
+<body>
+<button id="request">Make Request</button>
+<div id="output"></div>
+<script>
+	document.getElementById('request').addEventListener('click', getData);
+	var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+		targetUrl = 'http://0.0.0.0:5000/ps4-games/api/v1/list'
+	function getData() {
+	  fetch(targetUrl, {
+  credentials: 'include'
+})
+      .then((res) => res.json())
+      .then((data) => {
+        let output = '<h2 class="mb-4">Posts</h2>';
+        //console.log(data[0].data[0].title)
+        // var i = 0;
+        // data.forEach(function(post){
+        // 	//console.log(post.data[0].title)
+        //   output += `
+        //     <div class="card card-body mb-3">
+        //       <h3>${post.data[i].title}</h3>
+        //       <p>${post.data[i].img_link}</p>
+        //     </div>
+        //   `;
+        //   i++;
+        //   console.log(i)
+        // });
+
+      	for (var i=0; i<data[0].data.length; i++) {
+      	  output += `
+            <div class="card card-body mb-3">
+              <h3>${data[0].data[i].title}</h3>
+              <img src=${data[0].data[i].image_link} width="50%">
+            </div>
+          `;
+        }
+
+        document.getElementById('output').innerHTML = output;
+      })
+	}
+	// function getData() {
+	// 	let aa = 'e'
+	// 	console.log(aa)
+	// }
+</script>
+</body>
+</html>
